@@ -13,6 +13,7 @@ import pandas as pd
 
 homedir=str(Path( __file__).parents[1]) 
 
+
 def get_data(preprocessing=False, six_features = False, two_features = False, ssd = False,tsd=False,val_per_bin = 399,length=400,pruning=False,pruning_path_left="",pruning_path_right=""):
     """Loading in the Matlab files,preprocessing and returning a dictonary of data, a list of names and the tumormap.
 
@@ -57,11 +58,11 @@ def get_data(preprocessing=False, six_features = False, two_features = False, ss
             "zero_centering":zero_centering
         }
 
-        df = pd.read_csv(f"{homedir}/data/map.csv",sep=";",)
-        pat_map = dict(zip(df["name"],df["Pat State"]))     # 2 = tumor; 1= has somthing no cancer, 0= has nothing   
-        tumor_map= dict(zip(df["name"],df["L/R tumor"]))    # 1 = tumor left or both; -1 = tumor right; if healthy still has val 1
+        # df = pd.read_excel(f"{homedir}/data/excel_files/Read63_Anonymous.xlsx", skiprows=1)
+        # pat_map = dict(zip(df["name"],df["Pat State"]))     # 2 = tumor; 1= has somthing no cancer, 0= has nothing   
+        tumor_map={}    # 1 = tumor left or both; -1 = tumor right; if healthy still has val 1
 
-        mypath = f"{homedir}/data/mat_files/"
+        mypath = f"{homedir}/data/"
         onlyfiles = [f for f in listdir(mypath) if isfile(join(mypath, f))]
 
         main_data_types = ["left_wl1", "left_wl2", "right_wl1", "right_wl2"]
@@ -69,6 +70,8 @@ def get_data(preprocessing=False, six_features = False, two_features = False, ss
         #load all dataset, normalise and preprocess them per patient 
         for dataset in tqdm(onlyfiles,desc="LOADING DATA",colour='blue'):
             patient_id = dataset.replace(".mat","")
+            tumor_map[patient_id] = helpers.process_file_names(patient_id)
+            #skip all patients with unclear diagnoses
             matlab_data = loadmat(join(mypath, dataset))
             main_data = matlab_data["S"][0][0]
             #iterate over side an wavelength
@@ -116,13 +119,9 @@ def get_data(preprocessing=False, six_features = False, two_features = False, ss
                     temp=np.array(temp).flatten()    
                     data[patient_id][name_main_data_type][norm_method]["op"] = temp
         #creat the list of patient ids                    
-        X_names =[ex for ex in data]
-        X_names = np.array(X_names).reshape(-1)
-        #cleaning of tumor_map caus: healty pat also have 1 in tumor_map
-        for name in X_names:                                        
-            if pat_map[name]==0 or pat_map[name]==1:
-                tumor_map[name]=0
-        return data,tumor_map,X_names
+        names =[ex for ex in data]
+        names = np.array(names).reshape(-1)
+        return data,tumor_map,names
     except Exception as err:
         logger.error(err)
 

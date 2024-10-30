@@ -48,9 +48,9 @@ class autogluon_classification():
         try:
 
             if pruning:
-                data,tumor_map,original_names = oio.get_data(allPatients=True, preprocessing=False,pruning=pruning,pruning_path_left=ppath_left,pruning_path_right=ppath_right)
+                data,tumor_map,original_names = oio.get_data(preprocessing=False,pruning=pruning,pruning_path_left=ppath_left,pruning_path_right=ppath_right)
             else:
-                data,tumor_map,original_names = oio.get_data(allPatients=True, preprocessing=False)
+                data,tumor_map,original_names = oio.get_data(preprocessing=False)
             names , eval_names = odc.gen_eval_split(tumor_map,original_names)
             X_eval,y_eval=odc.getDistanceDataMatrix(data, eval_names, tumor_map, wave_length=self.wavelength,norm_methods=self.normalization,preprocessing=self.feature_representation,preprocess=True)
             X,y = odc.getDistanceDataMatrix(data, names , tumor_map, wave_length=self.wavelength,norm_methods=self.normalization,preprocessing=self.feature_representation,preprocess=True)

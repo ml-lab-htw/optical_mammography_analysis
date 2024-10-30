@@ -1,5 +1,7 @@
 # ALlow requirements.txt 
 !requirements.txt
+# Allow map.csv
+!map.csv 
 
 #CLUSTER related
 ~/*

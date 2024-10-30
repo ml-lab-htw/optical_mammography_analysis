@@ -52,18 +52,18 @@ class classificiation ():
         try:
             if self.mode=="bi":
                 if pruning:
-                    data,tumor_map,original_names = oio.get_data(allPatients=True, preprocessing=False,pruning=pruning,pruning_path_left=ppath_left,pruning_path_right=ppath_right)
+                    data,tumor_map,original_names = oio.get_data(preprocessing=False,pruning=pruning,pruning_path_left=ppath_left,pruning_path_right=ppath_right)
                 else:
-                    data,tumor_map,original_names = oio.get_data(allPatients=True, preprocessing=False)
+                    data,tumor_map,original_names = oio.get_data(preprocessing=False)
                 names , eval_names = odc.gen_eval_split(tumor_map,original_names)
                 X_eval,y_eval=odc.getDistanceDataMatrix(data, eval_names, tumor_map, wave_length=self.wavelength,norm_methods=self.normalization,preprocessing=self.feature_representation,preprocess=True)
                 X,y = odc.getDistanceDataMatrix(data, names , tumor_map, wave_length=self.wavelength,norm_methods=self.normalization,preprocessing=self.feature_representation,preprocess=True)
                 return X,y,X_eval,y_eval
             elif self.mode=="uni":
                 if pruning:
-                    data,tumor_map,original_names = oio.get_data(allPatients=True, preprocessing=True,six_features=True,pruning=pruning,pruning_path_left=ppath_left,pruning_path_right=ppath_right)
+                    data,tumor_map,original_names = oio.get_data(preprocessing=True,six_features=True,pruning=pruning,pruning_path_left=ppath_left,pruning_path_right=ppath_right)
                 else:
-                    data,tumor_map,original_names = oio.get_data(allPatients=True, preprocessing=True,six_features=True)
+                    data,tumor_map,original_names = oio.get_data(preprocessing=True,six_features=True)
                 names , eval_names = odc.gen_eval_split(tumor_map,original_names)
                 X_eval,y_eval= odc.getBreastBasedMatrix(data, eval_names, tumor_map, wave_length=self.wavelength,norm_methods=self.normalization,preprocessing=self.feature_representation)
                 X,y = odc.getBreastBasedMatrix(data, names , tumor_map, wave_length=self.wavelength,norm_methods=self.normalization,preprocessing=self.feature_representation)
@@ -101,7 +101,8 @@ class classificiation ():
 
 # script can be used standalone in the consol to test set mode to "uni" or "bi"
 if __name__ == "__main__":
-    mode="uni"
+    mode="bi"
     classifier = classificiation(mode)
     X,y,X_eval,y_eval = classifier.load_data()
     print(classifier.classify(X,y,X_eval,y_eval))
+
