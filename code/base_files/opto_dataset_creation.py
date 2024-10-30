@@ -5,9 +5,7 @@ import logging
 import numpy as np
 import pandas as pd
 
-homedir=str(Path.cwd().parents[0]) 
-logging.basicConfig(filename=f'{homedir}/logs/debuging.log', level=logging.WARNING, format='%(asctime)s %(levelname)s %(name)s %(message)s')
-
+homedir=str(Path( __file__).parents[1]) 
 
 def prep_data_autog(X,y):
     """ Converts the data into the specific Autogluon format 

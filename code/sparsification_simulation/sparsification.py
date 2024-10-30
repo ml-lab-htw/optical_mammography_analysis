@@ -6,7 +6,8 @@ import logging
 import os
 import re
 import csv
-homedir=str(Path.cwd().parents[0]) 
+
+homedir=str(Path( __file__).parents[1])  
 logging.basicConfig(filename=f'{homedir}/logs/debuging.log', level=logging.WARNING, format='%(asctime)s %(levelname)s %(name)s %(message)s')
 
 

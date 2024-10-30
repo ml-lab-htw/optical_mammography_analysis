@@ -3,8 +3,7 @@ import logging
 import numpy as np
 import pickle
 
-homedir=str(Path.cwd().parents[0]) 
-logging.basicConfig(filename=f'{homedir}/logs/debuging.log', level=logging.WARNING, format='%(asctime)s %(levelname)s %(name)s %(message)s')
+homedir=str(Path( __file__).parents[1])  
 
 class sparsification_masks():
     """ generats the pruning mask for the preset spars configurations

@@ -11,8 +11,7 @@ import logging
 import numpy as np
 import pandas as pd
 
-homedir=str(Path.cwd().parents[0]) 
-logging.basicConfig(filename=f'{homedir}/logs/debuging.log', level=logging.WARNING, format='%(asctime)s %(levelname)s %(name)s %(message)s')
+homedir=str(Path( __file__).parents[1]) 
 
 def get_data(allPatients=True, preprocessing=False, six_features = False, two_features = False, ssd = False,tsd=False,val_per_bin = 399,length=400,pruning=False,pruning_path_left="",pruning_path_right=""):
     """Loading in the Matlab files,preprocessing and returning a dictonary of data, a list of names and the tumormap.
