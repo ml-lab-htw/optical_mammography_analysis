@@ -24,14 +24,17 @@ we tested all of the code on a Linux machine and there is no official support fo
 
 ## Obtaining the data
 
-The data used in our study is provided at https://osf.io/4cr3z/. Please download the data and preprocess it accordingly.
-We will provide a script for automatic data conversion in the future to facilitate the usage.
+The data used in our study is provided at https://osf.io/4cr3z/. Please download the data and unzip it into the folder `code\data\downloaded_data`. After that, run the data preparation script to rename the files accordingly by: 
+```bash
+python code/data/data_preperation.py
+```
+If completed successfully, the files in the folder `code\data\downloaded_data` can be deleted.
 
 ## Usage
 
 All experiments can be run individually. For example the classification results can be reproduced by:
 ```bash
-python classification_moduls/classification.py
+python code/classification_moduls/classification.py
 ```
 
 To switch between bilateral and unilateral modes, open the respective experiment's Python script and modify the settings at the bottom of the script.
